@@ -1,0 +1,48 @@
+-macro render_model(module, model):
+  -if show_code:
+    %p
+      See source: <a href="{{ request_file(module, model['file']) }}#line-{{ model['lineno']['class'] }}">class definition</a>, <a href="{{ request_file(module, model['file']) }}#line-{{ model['lineno']['_columns'] }}">columns definition</a>
+
+  -if model["methods"]|length:
+    %h5
+      Methods
+    %ul
+      -for method in sort_list_of_dicts(model["methods"], "name"):
+        %li
+          <b>{% if show_code %}<a href="{{ request_file(module, model['file']) }}#line-{{ method['lineno'] }}">{% endif %}{{ method["name"] }}{% if show_code %}</a>{% endif %}</b>{{ format_method_arguments(method) }}
+
+  %h5
+    Columns
+  %ul style="margin-left: 17px"
+    -for field in model["_columns"]:
+      -include "field.haml"
+
+;-------------------------------------------------------------------------------
+
+%p
+  _name:
+    %i
+      =model.get("_name")
+
+  -if model.get("_inherit"):
+    %br
+    _inherit:
+      %i
+        -if get_top_model_url(model['_name']):
+          %a.menu-links href="/{{ get_top_model_url(model['_name']) }}"
+            =model["_inherit"]
+        -else:
+          =model["_inherit"]
+
+=render_model(module, model)
+
+-for other_module, neighbour in get_neighbour_models(model):
+  %h4
+    <a href="/{{ other_module }}/{{ neighbour['class_name'] }}.html" class="menu-links">{{ neighbour["_name"] }}</a> of {{ other_module }} {% if not neighbour.has_key("_inherit") %}<span class="success label">top</span>{% endif %}
+
+  =render_model(other_module, neighbour)
+
+%script
+;$("a.menu-links").click(function(event) {
+  ;fill_content(event.target.hash);
+;});

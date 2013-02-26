@@ -1,0 +1,52 @@
+-macro label(field, value, type="info")
+  -if field.get(value) in (True, "True"):
+    %span class="{{ type }} label" style="margin-right: 3px"
+      =value
+
+%li
+  <b>{% if show_code %}<a href="{{ request_file(module, model['file']) }}#line-{{ field['lineno'] }}">{% endif %}{{ field['name'] }}{% if show_code %}</a>{% endif %}</b>:
+    %span style="color: green"
+      =field['type']
+      -if field.get("size"):
+        ({{ field["size"] }})
+    -if field['type'] == "one2many" and field.get("field"):
+      on <span style="color: green">{{ field['field'] }}</span>
+    "{{ field.string }}"
+    =label(field, "required", "alert")
+    =label(field, "readonly")
+    =label(field, "select")
+    =label(field, "invisible")
+    =label(field, "is_function")
+    =label(field, "method")
+    =label(field, "store")
+    =label(field, "view_load")
+    =label(field, "translate", "secondary")
+
+    -if field.get("selection"):
+      %br
+      %i
+        Selection
+      %table style="background: none; border: none; margin: 0px; margin-left: 15px; margin-bottom: 15px"
+        -for pair in field["selection"]:
+          %tr
+            %td style="padding-bottom: 2px; padding-top: 2px"
+              =pair[0]
+            %td style="padding-bottom: 2px; padding-top: 2px"
+              %b
+                \=&gt;
+            %td style="padding-bottom: 2px; padding-top: 2px"
+              =pair[1]
+
+  %ul.fields
+    -if field["type"] in ("many2one", "one2many"):
+      %li
+        relation: <a href="/{{ get_top_model_url(field['relation']) }}">{{ field["relation"] }}</a>
+    %ul
+      -for key, value in field.items():
+        -if key not in ('type', 'size', 'required', 'readonly', 'help', 'string', 'relation', 'name', 'select', 'invisible', 'is_function', 'method', 'store', 'translate', 'view_load', 'selection', 'lineno') and (key != 'field' and field['type'] != 'one2many'):
+          %li
+            {{ key }}: {{ value }}
+    -if field["help"]:
+      %li
+        %i
+          =field["help"]

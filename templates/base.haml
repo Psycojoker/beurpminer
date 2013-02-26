@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+%html class="js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="en"
+  %head
+    %meta charset="utf-8" /
+
+    %meta name="viewport" content="width=device-width"
+
+    %title
+      -block title
+        OpenERP Models web interface
+
+    %link rel="stylesheet" href="/stylesheets/foundation.min.css"
+    %link rel="stylesheet" href="/stylesheets/app.css"
+    %link rel="stylesheet" href="/stylesheets/code.css"
+
+    %script src="/javascripts/modernizr.foundation.js"
+    -block head
+
+  %body.off-canvas
+    %header#header.row
+      -block header
+        %h1
+          OpenERP models web interface
+        %hr
+    .row
+      .three.columns
+        %dl.tabs.pill style="margin-top: 4px"
+          %dd.active
+            %a href="#modules"
+              Module
+          %dd
+            %a href="#models"
+              Model
+        %ul.tabs-content
+          %li#modulesTab.active
+            %ul.nav-bar.vertical
+              -for moduleu in modules.keys()|sort:
+                %li class="has-flyout{% if moduleu == module %} active{% endif %}"
+                  %a href="#"
+                    =moduleu
+                  %ul class="flyout"
+                    -if modules[moduleu]['models'].keys():
+                      -for model in sort_list_of_dicts(modules[moduleu]['models'].values(), "_name"):
+                        %li
+                          %a.menu-links href="/{{ moduleu }}/{{ model['class_name'] }}.html"
+                            =model.get("_name", "class_name")
+                    -else
+                      %li
+                        %b
+                          %a
+                            No models in this module.
+          %li#modelsTab
+            %ul.nav-bar.vertical
+              -for menu_model in models:
+                %li {% if model["class_name"] == menu_model["class_name"] %}class="active"{% endif %}
+                  %a href="/{{ menu_model['module'] }}/{{ menu_model['class_name'] }}.html#models"
+                    =menu_model['_name']
+
+      .nine.columns
+        #content
+          -block body
+
+    %script src="/javascripts/jquery.js"
+    %script src="/javascripts/jquery.foundation.tabs.js"
+    %script src="/javascripts/foundation.min.js"
+    %script src="/javascripts/app.js"
+    -block javascript

@@ -1,0 +1,24 @@
+-extends "base.haml"
+
+-block title
+  =model["_name"]
+
+-block body
+  %h3 style="margin-top: 0px"
+    {{ model.get("_name", model["_inherit"]) }} ({{ model["class_name"] }})
+
+  -if show_code:
+    %dl.tabs
+      %dd.active
+        %a href="#model"
+          Model
+      %dd
+        %a href="#view"
+          XML Views
+    %ul.tabs-content
+      %li#modelTab.active
+        -include "model.haml"
+      %li#viewTab
+        -include "view.haml"
+  -else:
+    -include "model.haml"

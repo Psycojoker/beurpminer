@@ -1,0 +1,65 @@
+%h4
+  Views
+
+{% for view in views_n_actions["views"] %}
+{% if view["module"] == module %}
+%h5
+  {{ view["id"] }} view
+
+{% highlight 'xml' %}
+=view["string"]
+{% endhighlight %}
+{% endif %}
+{% for action in views_n_actions["actions"] %}
+{% endfor %}
+{% endfor %}
+
+%h4
+  Views from other modules
+
+{% for view in views_n_actions["views"] %}
+{% if view["module"] != module %}
+-for moduleu, neighbour in get_neighbour_models(model):
+  -if view['module'] == moduleu:
+    %h5
+      <i>{{ view["id"] }}</i> of the <a href="/{{ view['module'] }}/{{ neighbour['class_name'] }}.html">{{ view['module'] }}</a> module
+
+{% highlight 'xml' %}
+=view["string"]
+{% endhighlight %}
+{% endif %}
+{% endfor %}
+
+%hr
+
+%h4
+  Actions
+
+{% for view in views_n_actions["views"] %}
+{% if view["module"] == module %}
+%h5
+  {{ view["id"] }} view
+
+{% highlight 'xml' %}
+=view["string"]
+{% endhighlight %}
+{% endif %}
+{% for action in views_n_actions["actions"] %}
+{% endfor %}
+{% endfor %}
+
+%h4
+  Actions from other modules
+
+{% for action in views_n_actions["actions"] %}
+{% if action["module"] != module %}
+-for moduleu, neighbour in get_neighbour_models(model):
+  -if action['module'] == moduleu:
+    %h5
+      <i>{{ action["id"] }}</i> of the <a href="/{{ action['module'] }}/{{ neighbour['class_name'] }}.html">{{ action['module'] }}</a> module
+
+{% highlight 'xml' %}
+=action["string"]
+{% endhighlight %}
+{% endif %}
+{% endfor %}

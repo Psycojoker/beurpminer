@@ -1,0 +1,19 @@
+<html>
+%head
+    %title
+      -block title
+        OpenERP Models web interface
+
+    %link rel="stylesheet" href="/stylesheets/foundation.min.css"
+    %link rel="stylesheet" href="/stylesheets/app.css"
+    %link rel="stylesheet" href="/stylesheets/code.css"
+<body>
+%h1
+  =file_path
+{% block body %}
+{% highlight_anchor 'python' %}
+=file_content
+{% endhighlight %}
+{% endblock %}
+</body>
+</html>
