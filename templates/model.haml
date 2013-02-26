@@ -29,7 +29,7 @@
     _inherit:
       %i
         -if get_top_model_url(model['_name']):
-          %a.menu-links href="/{{ get_top_model_url(model['_name']) }}"
+          %a.menu-links href="../{{ get_top_model_url(model['_name']) }}"
             =model["_inherit"]
         -else:
           =model["_inherit"]
@@ -38,7 +38,7 @@
 
 -for other_module, neighbour in get_neighbour_models(model):
   %h4
-    <a href="/{{ other_module }}/{{ neighbour['class_name'] }}.html" class="menu-links">{{ neighbour["_name"] }}</a> of {{ other_module }} {% if not neighbour.has_key("_inherit") %}<span class="success label">top</span>{% endif %}
+    <a href="../{{ other_module }}/{{ neighbour['class_name'] }}.html" class="menu-links">{{ neighbour["_name"] }}</a> of {{ other_module }} {% if not neighbour.has_key("_inherit") %}<span class="success label">top</span>{% endif %}
 
   =render_model(other_module, neighbour)
 

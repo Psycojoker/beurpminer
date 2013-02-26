@@ -58,7 +58,7 @@ FileInfos = namedtuple("FileInfos", ["file_path", "module", "file_destination_na
 
 def request_file(module, file_path):
     files_to_generate.add(FileInfos(file_path=file_path, module=module, file_destination_name=format_file_name(module, file_path)))
-    return "/%s/file/%s.html" % (module, format_file_name(module, file_path))
+    return "../%s/file/%s.html" % (module, format_file_name(module, file_path))
 
 def format_file_name(module, file_name):
     result = file_name.split(module, 1)[-1][1:]
@@ -183,7 +183,7 @@ def main(clean_dir=False, target_dir="build", cache_target=None, verbose=False, 
 
     models = get_list_of_models(modules_data)
 
-    html = env.get_template("home.haml").render(modules=modules_data, sort_list_of_dicts=sort_list_of_dicts, models=models, model={})
+    html = env.get_template("home.haml").render(modules=modules_data, sort_list_of_dicts=sort_list_of_dicts, models=models, model={}, home=True)
     open(os.path.join(target_dir, "index.html"), "w").write(html.encode("Utf-8"))
 
     for module in modules_data.keys():

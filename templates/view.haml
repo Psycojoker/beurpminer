@@ -22,7 +22,7 @@
 -for moduleu, neighbour in get_neighbour_models(model):
   -if view['module'] == moduleu:
     %h5
-      <i>{{ view["id"] }}</i> of the <a href="/{{ view['module'] }}/{{ neighbour['class_name'] }}.html">{{ view['module'] }}</a> module
+      <i>{{ view["id"] }}</i> of the <a href="../{{ view['module'] }}/{{ neighbour['class_name'] }}.html">{{ view['module'] }}</a> module
 
 {% highlight 'xml' %}
 =view["string"]
@@ -56,7 +56,7 @@
 -for moduleu, neighbour in get_neighbour_models(model):
   -if action['module'] == moduleu:
     %h5
-      <i>{{ action["id"] }}</i> of the <a href="/{{ action['module'] }}/{{ neighbour['class_name'] }}.html">{{ action['module'] }}</a> module
+      <i>{{ action["id"] }}</i> of the <a href="../{{ action['module'] }}/{{ neighbour['class_name'] }}.html">{{ action['module'] }}</a> module
 
 {% highlight 'xml' %}
 =action["string"]

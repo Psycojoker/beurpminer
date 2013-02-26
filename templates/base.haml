@@ -10,11 +10,17 @@
       -block title
         OpenERP Models web interface
 
-    %link rel="stylesheet" href="/stylesheets/foundation.min.css"
-    %link rel="stylesheet" href="/stylesheets/app.css"
-    %link rel="stylesheet" href="/stylesheets/code.css"
+    -if home:
+      %link rel="stylesheet" href="stylesheets/foundation.min.css"
+      %link rel="stylesheet" href="stylesheets/app.css"
+      %link rel="stylesheet" href="stylesheets/code.css"
+      %script src="javascripts/modernizr.foundation.js"
+    -else:
+      %link rel="stylesheet" href="../stylesheets/foundation.min.css"
+      %link rel="stylesheet" href="../stylesheets/app.css"
+      %link rel="stylesheet" href="../stylesheets/code.css"
+      %script src="../javascripts/modernizr.foundation.js"
 
-    %script src="/javascripts/modernizr.foundation.js"
     -block head
 
   %body.off-canvas
@@ -43,8 +49,12 @@
                     -if modules[moduleu]['models'].keys():
                       -for model in sort_list_of_dicts(modules[moduleu]['models'].values(), "_name"):
                         %li
-                          %a.menu-links href="/{{ moduleu }}/{{ model['class_name'] }}.html"
-                            =model.get("_name", "class_name")
+                          -if home:
+                            %a.menu-links href="{{ moduleu }}/{{ model['class_name'] }}.html"
+                              =model.get("_name", "class_name")
+                          -else:
+                            %a.menu-links href="../{{ moduleu }}/{{ model['class_name'] }}.html"
+                              =model.get("_name", "class_name")
                     -else
                       %li
                         %b
@@ -54,15 +64,25 @@
             %ul.nav-bar.vertical
               -for menu_model in models:
                 %li {% if model["class_name"] == menu_model["class_name"] %}class="active"{% endif %}
-                  %a href="/{{ menu_model['module'] }}/{{ menu_model['class_name'] }}.html#models"
-                    =menu_model['_name']
+                  -if home:
+                    %a href="{{ menu_model['module'] }}/{{ menu_model['class_name'] }}.html#models"
+                      =menu_model['_name']
+                  -else:
+                    %a href="../{{ menu_model['module'] }}/{{ menu_model['class_name'] }}.html#models"
+                      =menu_model['_name']
 
       .nine.columns
         #content
           -block body
 
-    %script src="/javascripts/jquery.js"
-    %script src="/javascripts/jquery.foundation.tabs.js"
-    %script src="/javascripts/foundation.min.js"
-    %script src="/javascripts/app.js"
+    -if home:
+      %script src="javascripts/jquery.js"
+      %script src="javascripts/jquery.foundation.tabs.js"
+      %script src="javascripts/foundation.min.js"
+      %script src="javascripts/app.js"
+    -else:
+      %script src="../javascripts/jquery.js"
+      %script src="../javascripts/jquery.foundation.tabs.js"
+      %script src="../javascripts/foundation.min.js"
+      %script src="../javascripts/app.js"
     -block javascript
