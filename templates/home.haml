@@ -2,16 +2,3 @@
 
 -block body
   Chose a model on the left.
-
--block javascript
-  ;%script
-    ;fill_content = function(hash) {
-      ;$.get(hash.slice(1), function(data) {
-          ;$("#content").html(data);
-      ;});
-    ;}
-    ;$("a.menu-links").click(function(event) {
-      ;fill_content(event.target.hash);
-    ;});
-    ;if (location.hash.length != 0 && location.hash.length != 1)
-      ;fill_content(location.hash);
