@@ -167,8 +167,8 @@ def main(clean_dir=False, target_dir="build", cache_target=None, verbose=False, 
         if not os.path.exists(cache_target):
             if verbose:
                 print "Building modules db, it might be quite long..."
-            open("db.json", "w").write(json.dumps(get_classes_from_config_file(), indent=4))
-        modules_data = json.load(open("db.json"))
+            open(cache_target, "w").write(json.dumps(get_classes_from_config_file(), indent=4))
+        modules_data = json.load(open(cache_target))
     else:
         if verbose:
             print "Building modules db, it might be quite long..."
